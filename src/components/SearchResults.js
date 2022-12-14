@@ -19,35 +19,31 @@ const SearchResult = ({ results }) => {
       </thead>
       <tbody>
         {results.map((element, index) => {
-          return <TableRow key={index} element={element} />;
+          const [select, setSelect] = useState(true);
+          function toggleSelecter() {
+            setSelect(select => !select);
+          }
+          return (
+            <tr
+              key={index}
+              onClick={toggleSelecter}
+              style={{ backgroundColor: select ? "" : "grey" }}
+            >
+              <th scope="row">{element.id}</th>
+              <td>{element.title}</td>
+              <td>{element.firstName}</td>
+              <td>{element.surname}</td>
+              <td>{element.email}</td>
+              <td>{element.roomId}</td>
+              <td>{element.checkInDate}</td>
+              <td>{element.checkOutDate}</td>
+              <td>{checkDiff(element.checkInDate, element.checkOutDate)}</td>
+            </tr>
+          );
+          // return <TableRow key={index} element={element} />;
         })}
       </tbody>
     </table>
-  );
-};
-
-const TableRow = ({ element }) => {
-  const [select, setSelect] = useState(true);
-
-  function toggleSelecter() {
-    setSelect(select => !select);
-  }
-
-  return (
-    <tr
-      onClick={toggleSelecter}
-      style={{ backgroundColor: select ? "" : "lightGrey" }}
-    >
-      <th scope="row">{element.id}</th>
-      <td>{element.title}</td>
-      <td>{element.firstName}</td>
-      <td>{element.surname}</td>
-      <td>{element.email}</td>
-      <td>{element.roomId}</td>
-      <td>{element.checkInDate}</td>
-      <td>{element.checkOutDate}</td>
-      <td>{checkDiff(element.checkInDate, element.checkOutDate)}</td>
-    </tr>
   );
 };
 let checkDiff = (InDate, OutDate) => {
